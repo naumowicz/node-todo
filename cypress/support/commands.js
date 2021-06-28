@@ -24,26 +24,33 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import support from "./support";
+import selectors from "./selector";
+import data from "./data";
 
 /**
  * Adding task on todo list app.
  */
 Cypress.Commands.add("addTask", (task) => {
-    cy.get(support.inputField).type(task);
-    cy.contains("Add").click();
+    cy.get(selectors.inputField).type(task);
+    cy.get(selectors.add).click();
 });
 
 /**
  * Deleting task on todo list app.
  */
- Cypress.Commands.add("deleteTask", (task) => {
+Cypress.Commands.add("deleteTask", (task) => {
     cy.xpath(`//label[contains(string(), '${task}')]`).click();
 });
 
 /**
  * Veryfing page of todo list app.
+ * Checking header, input, button.
+ * Comparing span with number of tasks to checkboxes.
  */
- Cypress.Commands.add("verifyPage", (task) => {
-    cy.get(support.header).should('have.text', support.headerText);
+Cypress.Commands.add("verifyPage", () => {
+    cy.get(selectors.header).should("have.text", data.headerText);
+	cy.get(selectors.inputField).should('exist');
+	cy.get(selectors.add).should('exist').should("have.text", data.addButtonText);
+    const numberOfCheckboxes = cy.get(selectors.checkbox).its("length");
+    cy.get(selectors.numberOfTasks).should("have.text", numberOfCheckboxes);
 });
