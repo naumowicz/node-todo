@@ -55,7 +55,7 @@ Cypress.Commands.add("verifyTasks", (task, number) => {
  * Comparing span with number of tasks to checkboxes.
  */
 Cypress.Commands.add("verifyPage", () => {
-    cy.get(selectors.header).should("have.text", data.headerText);
+    cy.get(selectors.header).contains(data.headerText);
 	cy.get(selectors.inputField).should('exist');
 	cy.get(selectors.add).should('exist').should("have.text", data.addButtonText);
     const numberOfCheckboxes = cy.get(selectors.checkbox).its("length");
