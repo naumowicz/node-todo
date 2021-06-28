@@ -43,6 +43,13 @@ Cypress.Commands.add("deleteTask", (task) => {
 });
 
 /**
+ * Veryfing tasks and number of them.
+ */
+Cypress.Commands.add("verifyTasks", (task, number) => {
+    cy.get(`//label[contains(string(), '${task}')]`).its(length).should("equal", number);
+});
+
+/**
  * Veryfing page of todo list app.
  * Checking header, input, button.
  * Comparing span with number of tasks to checkboxes.
