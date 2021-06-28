@@ -23,3 +23,27 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import support from "./support";
+
+/**
+ * Adding task on todo list app.
+ */
+Cypress.Commands.add("addTask", (task) => {
+    cy.get(support.inputField).type(task);
+    cy.contains("Add").click();
+});
+
+/**
+ * Deleting task on todo list app.
+ */
+ Cypress.Commands.add("deleteTask", (task) => {
+    cy.xpath(`//label[contains(string(), '${task}')]`).click();
+});
+
+/**
+ * Veryfing page of todo list app.
+ */
+ Cypress.Commands.add("verifyPage", (task) => {
+    cy.get(support.header).should('have.text', support.headerText);
+});
